@@ -27,15 +27,12 @@
         }
 
         .buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
             margin-bottom: 20px;
         }
 
         button {
             padding: 10px;
+            margin: 5px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -43,6 +40,7 @@
             transition: background-color 0.3s, transform 0.2s;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 5px;
         }
 
@@ -50,13 +48,13 @@
             transform: scale(1.05);
         }
 
-        .hot { background-color: #e74c3c; color: white; }
-        .normal { background-color: #f39c12; color: white; }
-        .half-hot { background-color: #c0392b; color: white; }
-        .half-regular { background-color: #d35400; color: white; }
-        .crispy { background-color: #27ae60; color: white; }
-        .undo { background-color: #2980b9; color: white; }
-        .reset { background-color: #7f8c8d; color: white; }
+        .hot { background-color: #ff6b6b; color: white; }
+        .normal { background-color: #ffa502; color: white; }
+        .half-hot { background-color: #ff4757; color: white; }
+        .half-regular { background-color: #eccc68; color: white; }
+        .crispy { background-color: #2ed573; color: white; }
+        .undo { background-color: #1e90ff; color: white; }
+        .reset { background-color: #57606f; color: white; }
 
         .results {
             font-size: 18px;
@@ -78,18 +76,18 @@
     <div class="container">
         <h1>إدارة طلبات الدجاج</h1>
         <div class="buttons">
-            <button class="hot" onclick="addOrder('hot')">🌶️ دجاجة حارة</button>
-            <button class="normal" onclick="addOrder('normal')">🍗 دجاجة عادية</button>
-            <button class="half-hot" onclick="addOrder('half-hot')">🔥 نصف حارة</button>
-            <button class="half-regular" onclick="addOrder('half-regular')">🥩 نصف عادية</button>
+            <button class="hot" onclick="addOrder('hot')">🌶️ دجاج حار</button>
+            <button class="normal" onclick="addOrder('normal')">🍗 دجاج عادي</button>
+            <button class="half-hot" onclick="addOrder('half-hot')">🔥 نصف دجاجة حارة</button>
+            <button class="half-regular" onclick="addOrder('half-regular')">🥄 نصف دجاجة عادية</button>
             <button class="crispy" onclick="addOrder('crispy')">🍖 دجاج كرسبي</button>
-            <button class="undo" onclick="undoLastOrder()">↩️ رجوع</button>
-            <button class="reset" onclick="resetOrders()">🔄 إعادة تعيين</button>
+            <button class="undo" onclick="undoLastOrder()">↩️ رجوع خطوة</button>
+            <button class="reset" onclick="resetOrders()">🔄 إعادة التعيين</button>
         </div>
         <div class="results">
-            <p>عدد الدجاج الحار: <span id="hot-count">0</span></p>
-            <p>عدد الدجاج العادي: <span id="normal-count">0</span></p>
-            <p>عدد دجاج الكرسبي: <span id="crispy-count">0</span></p>
+            <p>🌶️ عدد الدجاج الحار: <span id="hot-count">0</span></p>
+            <p>🍗 عدد الدجاج العادي: <span id="normal-count">0</span></p>
+            <p>🍖 عدد دجاج الكرسبي: <span id="crispy-count">0</span></p>
         </div>
     </div>
 
