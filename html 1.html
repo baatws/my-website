@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة طلبات الدجاج</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .buttons {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .hot { background-color: red; color: white; }
+        .normal { background-color: orange; color: white; }
+        .half-hot { background-color: darkred; color: white; }
+        .half-regular { background-color: darkorange; color: white; }
+        .undo { background-color: blue; color: white; }
+        .reset { background-color: gray; color: white; }
+
+        .results {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 14px;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>إدارة طلبات الدجاج</h1>
+        <div class="buttons">
+            <button class="hot" onclick="addOrder('hot')">إضافة دجاجة حارة</button>
+            <button class="normal" onclick="addOrder('normal')">إضافة دجاجة عادية</button>
+            <button class="half-hot" onclick="addOrder('half-hot')">إضافة نصف دجاجة حارة</button>
+            <button class="half-regular" onclick="addOrder('half-regular')">إضافة نصف دجاجة عادية</button>
+            <button class="undo" onclick="undoLastOrder()">رجوع خطوة</button>
+            <button class="reset" onclick="resetOrders()">إعادة التعيين</button>
+        </div>
+        <div class="results">
+            <p>عدد الدجاج الحار: <span id="hot-count">0</span></p>
+            <p>عدد الدجاج العادي: <span id="normal-count">0</span></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>تصميم: عبدالله السوري</p>
+    </footer>
+
+    <script>
+        let hotCount = localStorage.getItem("hotCount") ? parseFloat(localStorage.getItem("hotCount")) : 0;
+        let normalCount = localStorage.getItem("normalCount") ? parseFloat(localStorage.getItem("normalCount")) : 0;
+        let orderHistory = localStorage.getItem("orderHistory") ? JSON.parse(localStorage.getItem("orderHistory")) : [];
+
+        document.getElementById("hot-count").textContent = hotCount;
+        document.getElementById("normal-count").textContent = normalCount;
+
+        function addOrder(type) {
+            let order = { type: type, value: 0 };
+
+            if (type === "hot") {
+                hotCount += 1;
+                order.value = 1;
+            } else if (type === "normal") {
+                normalCount += 1;
+                order.value = 1;
+            } else if (type === "half-hot") {
+                hotCount += 0.5;
+                order.value = 0.5;
+            } else if (type === "half-regular") {
+                normalCount += 0.5;
+                order.value = 0.5;
+            }
+
+            orderHistory.push(order);
+            updateStorage();
+        }
+
+        function undoLastOrder() {
+            if (orderHistory.length > 0) {
+                let lastOrder = orderHistory.pop();
+
+                if (lastOrder.type === "hot") {
+                    hotCount -= lastOrder.value;
+                } else if (lastOrder.type === "normal") {
+                    normalCount -= lastOrder.value;
+                } else if (lastOrder.type === "half-hot") {
+                    hotCount -= lastOrder.value;
+                } else if (lastOrder.type === "half-regular") {
+                    normalCount -= lastOrder.value;
+                }
+
+                updateStorage();
+            }
+        }
+
+        function resetOrders() {
+            hotCount = 0;
+            normalCount = 0;
+            orderHistory = [];
+            updateStorage();
+        }
+
+        function updateStorage() {
+            localStorage.setItem("hotCount", hotCount);
+            localStorage.setItem("normalCount", normalCount);
+            localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
+
+            document.getElementById("hot-count").textContent = hotCount;
+            document.getElementById("normal-count").textContent = normalCount;
+        }
+    </script>
+
+</body>
+</html>
