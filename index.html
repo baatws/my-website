@@ -27,7 +27,21 @@
         }
 
         .buttons {
+            display: flex;
+            justify-content: space-between;
             margin-bottom: 20px;
+        }
+
+        .buttons .left, .buttons .right {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .buttons .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         button {
@@ -76,13 +90,19 @@
     <div class="container">
         <h1>إدارة طلبات الدجاج</h1>
         <div class="buttons">
-            <button class="hot" onclick="addOrder('hot')">🌶️ دجاج حار</button>
-            <button class="normal" onclick="addOrder('normal')">🍗 دجاج عادي</button>
-            <button class="half-hot" onclick="addOrder('half-hot')">🔥 نصف دجاجة حارة</button>
-            <button class="half-regular" onclick="addOrder('half-regular')">🥄 نصف دجاجة عادية</button>
-            <button class="crispy" onclick="addOrder('crispy')">🍖 دجاج كرسبي</button>
-            <button class="undo" onclick="undoLastOrder()">↩️ رجوع خطوة</button>
-            <button class="reset" onclick="resetOrders()">🔄 إعادة التعيين</button>
+            <div class="left">
+                <button class="hot" onclick="addOrder('hot')">🌶️ دجاج حار</button>
+                <button class="normal" onclick="addOrder('normal')">🍗 دجاج عادي</button>
+                <button class="half-hot" onclick="addOrder('half-hot')">🔥 نصف دجاجة حارة</button>
+                <button class="half-regular" onclick="addOrder('half-regular')">🥄 نصف دجاجة عادية</button>
+            </div>
+            <div class="center">
+                <button class="crispy" onclick="addOrder('crispy')">🍖 دجاج كرسبي</button>
+            </div>
+            <div class="right">
+                <button class="undo" onclick="undoLastOrder()">↩️ رجوع خطوة</button>
+                <button class="reset" onclick="resetOrders()">🔄 إعادة التعيين</button>
+            </div>
         </div>
         <div class="results">
             <p>🌶️ عدد الدجاج الحار: <span id="hot-count">0</span></p>
