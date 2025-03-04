@@ -48,6 +48,7 @@
         .normal { background-color: orange; color: white; }
         .half-hot { background-color: darkred; color: white; }
         .half-regular { background-color: darkorange; color: white; }
+        .crispy { background-color: goldenrod; color: white; }
         .undo { background-color: blue; color: white; }
         .reset { background-color: gray; color: white; }
 
@@ -75,12 +76,14 @@
             <button class="normal" onclick="addOrder('normal')">إضافة دجاجة عادية</button>
             <button class="half-hot" onclick="addOrder('half-hot')">إضافة نصف دجاجة حارة</button>
             <button class="half-regular" onclick="addOrder('half-regular')">إضافة نصف دجاجة عادية</button>
+            <button class="crispy" onclick="addOrder('crispy')">إضافة دجاجة كرسبي</button>
             <button class="undo" onclick="undoLastOrder()">رجوع خطوة</button>
             <button class="reset" onclick="resetOrders()">إعادة التعيين</button>
         </div>
         <div class="results">
             <p>عدد الدجاج الحار: <span id="hot-count">0</span></p>
             <p>عدد الدجاج العادي: <span id="normal-count">0</span></p>
+            <p>عدد الدجاج الكرسبي: <span id="crispy-count">0</span></p>
         </div>
     </div>
 
@@ -89,12 +92,14 @@
     </footer>
 
     <script>
-        let hotCount = localStorage.getItem("hotCount") ? parseFloat(localStorage.getItem("hotCount")) : 0;
-        let normalCount = localStorage.getItem("normalCount") ? parseFloat(localStorage.getItem("normalCount")) : 0;
-        let orderHistory = localStorage.getItem("orderHistory") ? JSON.parse(localStorage.getItem("orderHistory")) : [];
+        let hotCount = parseFloat(localStorage.getItem("hotCount")) || 0;
+        let normalCount = parseFloat(localStorage.getItem("normalCount")) || 0;
+        let crispyCount = parseFloat(localStorage.getItem("crispyCount")) || 0;
+        let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
 
         document.getElementById("hot-count").textContent = hotCount;
         document.getElementById("normal-count").textContent = normalCount;
+        document.getElementById("crispy-count").textContent = crispyCount;
 
         function addOrder(type) {
             let order = { type: type, value: 0 };
@@ -111,6 +116,9 @@
             } else if (type === "half-regular") {
                 normalCount += 0.5;
                 order.value = 0.5;
+            } else if (type === "crispy") {
+                crispyCount += 1;
+                order.value = 1;
             }
 
             orderHistory.push(order);
@@ -129,6 +137,8 @@
                     hotCount -= lastOrder.value;
                 } else if (lastOrder.type === "half-regular") {
                     normalCount -= lastOrder.value;
+                } else if (lastOrder.type === "crispy") {
+                    crispyCount -= lastOrder.value;
                 }
 
                 updateStorage();
@@ -138,6 +148,7 @@
         function resetOrders() {
             hotCount = 0;
             normalCount = 0;
+            crispyCount = 0;
             orderHistory = [];
             updateStorage();
         }
@@ -145,10 +156,12 @@
         function updateStorage() {
             localStorage.setItem("hotCount", hotCount);
             localStorage.setItem("normalCount", normalCount);
+            localStorage.setItem("crispyCount", crispyCount);
             localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
 
             document.getElementById("hot-count").textContent = hotCount;
             document.getElementById("normal-count").textContent = normalCount;
+            document.getElementById("crispy-count").textContent = crispyCount;
         }
     </script>
 
